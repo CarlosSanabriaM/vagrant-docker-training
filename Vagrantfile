@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose#, yml: "/vagrant/docker-compose.yml", run: "always" # remove '#' to run docker-compose on vagrant up
   # Execute tmux shell script
+  config.vm.provision "shell", path: "scripts/vagrant/install-dive.sh"
   config.vm.provision "shell", path: "scripts/vagrant/tmux.sh"
   config.vm.provision "shell", path: "scripts/vagrant/motd.sh", run: "always"
 

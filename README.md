@@ -170,6 +170,20 @@ tmux kill-server
 tmux attach-session -t <session-name>
 ```
 
+### (Optional) Analyze docker image layers [vm]
+
+You can use the [dive](https://github.com/wagoodman/dive) tool to analyze a Docker image and its layers.
+
+It shows Docker image contents broken down by layer and indicates what's changed in each layer, among other things.
+
+```bash
+dive <your-image-tag>
+```
+
+> __ℹ️ Note:__
+>
+> The `dive` tool is installed in the Vagrant provisioning phase, using the `install-dive.sh` script.
+
 ### (Optional) Remove and start containers to clean data [vm]
 
 > __ℹ️ Note:__
