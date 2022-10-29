@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision :docker
   config.vm.provision :docker_compose#, yml: "/vagrant/docker-compose.yml", run: "always" # remove '#' to run docker-compose on vagrant up
   # Execute configuration shell scripts
+  config.vm.provision "shell", name: "Create bash aliases file",  path: "scripts/vagrant/create-bash-aliases-file.sh"
   config.vm.provision "shell", name: "Install dive",              path: "scripts/vagrant/install-dive.sh"
   config.vm.provision "shell", name: "Install Docker extensions", path: "scripts/vagrant/install-docker-extensions.sh"
   config.vm.provision "shell", name: "Install jq",                path: "scripts/vagrant/install-jq.sh"
