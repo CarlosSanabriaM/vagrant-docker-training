@@ -32,7 +32,6 @@ echo "Install Docker Color Output"
 add-apt-repository -y ppa:dldash/core
 apt-get update
 apt-get install -y docker-color-output
-#  Add `dco` alias
+#  Add `docker-color-output` related aliases
 #  As recommended by Ubuntu, our custom aliases will be added to ~/.bash_aliases
-echo '# Docker Color Output (https://github.com/devemio/docker-color-output)' >> /home/vagrant/.bash_aliases
-echo 'alias dco="docker-color-output"' >> /home/vagrant/.bash_aliases
+cat /vagrant/scripts/vagrant/docker-color-output-aliases.sh >> /home/vagrant/.bash_aliases
