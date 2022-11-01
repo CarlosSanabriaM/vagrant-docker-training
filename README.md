@@ -3,7 +3,7 @@
 > __⭐️ Local, automated and isolated environment for learning Docker.__
 
 This project creates a VM using [Vagrant](https://www.vagrantup.com/), that has [Docker](https://www.docker.com/)
-and [Docker-Compose](https://docs.docker.com/compose/) installed.
+and [Docker Compose](https://docs.docker.com/compose/) installed.
 
 > With this, __you don't need to install Docker and Docker Compose__ on your local computer.  
 > __You just need to install Vagrant and VirtualBox__.
@@ -12,12 +12,12 @@ and [Docker-Compose](https://docs.docker.com/compose/) installed.
 
 ## Architecture
 
-Vagrant creates an Ubuntu VM that installs Docker and Docker-Compose, pulls Docker images from [DockerHub](https://hub.docker.com/),
+Vagrant creates an Ubuntu VM that installs Docker, pulls Docker images from [DockerHub](https://hub.docker.com/),
 and runs containers with their corresponding port mappings.
 
 The automation process is specified using the following files:
-1. `Vagrantfile`: Tells Vagrant how to create and configure the VM.
-2. `docker-compose.yml`: Tells Docker-Compose which and how containers should be executed.
+1. `Vagrantfile`: Tells Vagrant how to create and configure the VM
+2. `docker-compose.yml`: Tells Docker Compose which and how containers should be executed
 
 The following diagram shows the architecture:
 
@@ -27,12 +27,15 @@ The following diagram shows the architecture:
 
 * [Install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Install Vagrant](https://www.vagrantup.com/docs/installation)
-* Install the `vagrant-docker-compose` Vagrant plugin:
-  ```bash
-  vagrant plugin install vagrant-docker-compose
-  ```
 
 ### Verify installation
+
+> __ℹ️ Note:__
+>
+> Execute these steps only if it's the first time that you use Vagrant with VirtualBox.  
+> If not, you can skip them. They only serve to test the Vagrant + VirtualBox installation.  
+> If Vagrant and VirtualBox are installed and configured correctly,
+> then the environment will work fine (it has already been tested, and is repeatable).
 
 Check that the `vagrant` executable was added correctly to the `PATH` variable:
 ```bash
@@ -71,12 +74,7 @@ rm -rf test-vagrant
 >
 > * Visit the [VirtualBox Common Issues](https://developer.hashicorp.com/vagrant/docs/providers/virtualbox/common-issues) section of the Vagrant documentation
 
-Check that the `vagrant-docker-compose` plugin was installed correctly:
-```bash
-vagrant plugin list | grep "vagrant-docker-compose"
-```
-
-## Steps to execute
+## Steps to run the environment
 
 All the `vagrant` commands must be executed in the host machine from the folder
 that contains the Vagrantfile (in this case, the project root folder).
@@ -89,12 +87,15 @@ that contains the Vagrantfile (in this case, the project root folder).
 
 ### 1. Start the VM [host]
 
-This will install Docker inside that VM, pull the Docker images from DockerHub, and run the containers.
+This will:
+1. Install Docker inside the VM
+2. Pull the Docker images from DockerHub
+3. Run the containers
 
 > __ℹ️ Note:__
 >
-> Docker images/containers will only be downloaded/executed if the `run: "always"` option
-> is enabled for the `docker_compose` provisioner in the `Vagrantfile`.
+> Docker images/containers will only be downloaded/executed if the
+> `Docker Compose up` line in the `Vagrantfile` is uncommented.
 
 ```bash
 vagrant up
@@ -108,7 +109,7 @@ vagrant status
 
 ### 3. Connect to the VM [host]
 
-This connection is done via ssh.
+This connection is done via SSH.
 
 ```bash
 vagrant ssh
@@ -145,10 +146,9 @@ The tmux window is divided in panes with the following layout:
 
 ### (Optional) Access JupyterLab in your web browser [host]
 
-The URL for accesing JupyterLab can be obtained executing one of the following commands:
+The URL for accesing JupyterLab can be obtained executing the following command:
 ```bash
-docker logs vagrant_python_1 2>&1 | grep -o '[^ ]*127.0.0.1[^ ]*' # container created with vagrant docker-compose plugin
-docker logs vagrant-python-1 2>&1 | grep -o '[^ ]*127.0.0.1[^ ]*' # container created with `docker-compose up` command
+docker logs vagrant-python-1 2>&1 | grep -o '[^ ]*127.0.0.1[^ ]*'
 ```
 
 Simply copy that URL and paste it in your web browser.
@@ -192,14 +192,14 @@ dive <your-image-tag>
 
 > __ℹ️ Note:__
 >
-> Only if containers where executed using docker compose.
+> Only if containers where executed using Docker Compose.
 
 This is useful if you want to clean the data inside the containers.
 
 ```bash
 cd /vagrant
-docker-compose rm --stop --force
-docker-compose up -d
+docker compose rm --stop --force
+docker compose up -d
 ```
 
 ### (Optional) Connect to one of the Docker containers [vm]
@@ -253,15 +253,12 @@ vagrant destroy
 
 Whenever you change the `docker-compose.yml` file, you need to run `vagrant reload` to redefine the Vagrant box.
 
-If you need another version of Docker compose, you need to specify the `compose_version` option
-in the Vagrantfile (defaults to `1.24.1`), in the `config.vm.provision :docker_compose` line.
-
 ## References
 
 * [Vagrant](https://www.vagrantup.com/)
 * [Docker](https://www.docker.com/)
 * [Vagrant Docker provisioner](https://www.vagrantup.com/docs/provisioning/docker)
-* [Vagrant Docker Compose provisioner](https://github.com/leighmcculloch/vagrant-docker-compose#to-install-rebuild-and-run-docker-compose-on-vagrant-up)
 * [Jupyter base-notebook + python-3.10 Docker image](https://hub.docker.com/layers/jupyter/base-notebook/python-3.10/images/sha256-9258c7fbbcd0fd7f4c314f71285f1e42920673231673349105e5af8f8a8bf7bb)
 * [Vagrant commands](https://www.vagrantup.com/docs/cli)
 * [Docker commands](https://docs.docker.com/engine/reference/commandline/docker/)
+* [Docker Compose commands](https://docs.docker.com/compose/reference/)

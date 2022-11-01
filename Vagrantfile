@@ -36,8 +36,9 @@ Vagrant.configure("2") do |config|
 
   # Enable provisioning with Docker and Docker Compose.
   config.vm.provision :docker
-  config.vm.provision :docker_compose #, yml: "/vagrant/docker-compose.yml", run: "always" # remove '#' to run docker-compose on vagrant up
-  # Execute configuration shell scripts
+  # Execute `docker compose up` on every `vagrant up` (runs all containers defined in `docker-compose.yml`).
+  config.vm.provision "shell", name: "Docker Compose up",         inline: "docker compose -f /vagrant/docker-compose.yml up -d --quiet-pull", run: "always"
+  # Execute configuration shell scripts.
   config.vm.provision "shell", name: "Create bash aliases file",  path: "scripts/vagrant/create-bash-aliases-file.sh"
   config.vm.provision "shell", name: "Install dive",              path: "scripts/vagrant/install-dive.sh"
   config.vm.provision "shell", name: "Install Docker extensions", path: "scripts/vagrant/install-docker-extensions.sh"
@@ -45,7 +46,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", name: "Configure tmux",            path: "scripts/vagrant/tmux.sh"
   config.vm.provision "shell", name: "Configure motd",            path: "scripts/vagrant/motd.sh", run: "always"
 
-  # Automatically chdir to /vagrant directory upon `vagrant ssh`
+  # Automatically chdir to /vagrant directory upon `vagrant ssh`.
   config.ssh.extra_args = ["-t", "cd /vagrant; bash --login"] # warn: this breaks the ability to use the `vagrant ssh -- <command>` option
 
 end
