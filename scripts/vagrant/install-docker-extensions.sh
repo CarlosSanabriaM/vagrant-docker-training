@@ -16,20 +16,6 @@ apt-get install -y bash-completion
 curl -sS -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh
 
 
-# Install Docker Compose CLI completion
-#  https://docker-docs.netlify.app/compose/completion/
-#  TODO: It doesn't work. It autocompletes `compose` indefinitely: `docker-compose compose compose compose compose ...`
-#  TODO: If `docker compose v2` is used, then we don't need this completion
-echo "-------------------------------------"
-echo "Install Docker Compose CLI completion"
-echo "-------------------------------------"
-#  1. Bash completion was already installed in the previous section
-#  2. Place the Docker Compose completion script in /etc/bash_completion.d/
-#     IMPORTANT: Docker Compose version in the URL should match the Docker Compose version installed in the VM
-#                In our case is 1.24.1, which is the default version installed by Vagrant Docker Compose plugin
-curl -sS -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
-
-
 # Install Docker Color Output
 #  https://github.com/devemio/docker-color-output
 echo "---------------------------"
