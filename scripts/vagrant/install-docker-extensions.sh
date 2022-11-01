@@ -21,9 +21,10 @@ curl -sS -L https://raw.githubusercontent.com/docker/docker-ce/master/components
 echo "---------------------------"
 echo "Install Docker Color Output"
 echo "---------------------------"
-add-apt-repository -y ppa:dldash/core
-apt-get update
-apt-get install -y docker-color-output
+#  The latest version has to be downloaded from GitHub releases page
+#  The downloaded file is already a binary file that does not require installation
+curl -sS -L https://github.com/devemio/docker-color-output/releases/download/v2.2.0/docker-color-output-linux-amd64 -o /usr/bin/docker-color-output
+chmod +x /usr/bin/docker-color-output
 #  Add `docker-color-output` related aliases
 #  As recommended by Ubuntu, our custom aliases will be added to ~/.bash_aliases
 cat /vagrant/scripts/vagrant/docker-color-output-aliases.sh >> /home/vagrant/.bash_aliases
