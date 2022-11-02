@@ -42,6 +42,11 @@ docker() {
         elif [ "$1" = "container" ] && [[ "$2" = @(ps|ls|list) ]]; then
             __dps "${@:3}" # pass the [3, n] args
         # ------------------------------------------------------------------------
+        # -------------------------------- dcps ----------------------------------
+        # `docker compose ps`
+        elif [ "$1" = "compose" ] && [ "$2" = "ps" ]; then
+            __dcps "${@:3}" # pass the [3, n] args
+        # ------------------------------------------------------------------------
         # -------------------------------- other ---------------------------------
         else
             # Invoke docker with all args
@@ -104,6 +109,29 @@ __dps(){
     else
         # Invoke `docker ps` with all args (`docker-color-output` is ommited)
         /usr/bin/docker ps "$@"
+    fi
+}
+
+__dcps(){
+    # ----------------------------------------- Supported options -------------------------------------------
+    # Only the options listed here will be supported in conjuntion with `docker-color-output`
+    #     dcps
+    if [ $# -eq 0 ] || \
+        # dcps -a | --all
+        ([ $# -eq 1 ] && [[ "$1" = @(-a|--all) ]]) || \
+        # dcps --status=[paused | restarting | removing | running | dead | created | exited]
+        ([ $# -eq 1 ] && [[ "$1" == --status=* ]]) || \
+        # dcps --status [paused | restarting | removing | running | dead | created | exited] | --filter "{...}"
+        ([ $# -eq 2 ] && [[ "$1" = @(--status|--filter) ]]) || \
+        # dcps --format pretty
+        ([ $# -eq 2 ] && [ "$1" = "--format" ] && [ "$2" = "pretty" ])
+    then
+        # Invoke `docker compose ps` with all args + pipe the result to `docker-color-output`
+        /usr/bin/docker compose ps "$@" | docker-color-output
+    # -------------------------------------------------------------------------------------------------------
+    else
+        # Invoke `docker compose ps` with all args (`docker-color-output` is ommited)
+        /usr/bin/docker compose ps "$@"
     fi
 }
 
