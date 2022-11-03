@@ -11,8 +11,9 @@ $ tmux attach -t python"
 export DEBIAN_FRONTEND=noninteractive
 
 # Install packages
-apt-get install -y cowsay
 apt-get install -y figlet
+apt-get install -y lolcat
+apt-get install -y cowsay
 
 # Get array size
 cowsayFilesArraySize=${#COWSAY_FILES_ARRAY[@]}
@@ -27,7 +28,7 @@ cowsayFilesArrayRandomIndex=$(shuf -i 0-$cowsayFilesArrayLastIndex -n 1)
 cowsayFile=${COWSAY_FILES_ARRAY[$cowsayFilesArrayRandomIndex]}
 
 # Create a message of the day that will be displayed on login, storing it in /etc/motd
-figlet -t "$MOTD_FIGLET_HEADER" > /etc/motd
+figlet -t "$MOTD_FIGLET_HEADER" | lolcat --spread 1.5 --force > /etc/motd
 printf "%s" "$MOTD" | /usr/games/cowsay -n -f "$cowsayFile" >> /etc/motd
 
 # Log message
