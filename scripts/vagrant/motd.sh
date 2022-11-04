@@ -7,7 +7,7 @@ MOTD_TMUX_COMMANDS="Attach to the tmux session using the following command:
 $ tmux attach -t python"
 
 # Suppress `dpkg-preconfigure` warning related to stdin for `apt-get install`
-#  https://serverfault.com/a/670688
+#  https://serverfault.com/a/670688
 export DEBIAN_FRONTEND=noninteractive
 
 # Install packages
