@@ -8,7 +8,7 @@ and [Docker Compose](https://docs.docker.com/compose/) installed.
 > With this, __you don't need to install Docker and Docker Compose__ on your local computer.  
 > __You just need to install Vagrant and VirtualBox__.
 >
-> All the images and containers are created in an __isolated environment__ that can be delated at any time.
+> All the images and containers are created in an __isolated environment__ that can be deleted at any time.
 
 ## Architecture
 
